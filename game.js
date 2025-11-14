@@ -221,7 +221,10 @@ class Game {
         // This now triggers the orientation change
         this.nextOrientationIndicator.style.visibility = 'hidden';
         this.changeRequiredOrientation();
-        this.timer.reset(); // Restart the growth animation for the new next orientation
+        // Use a microtask delay to ensure the DOM has updated before restarting the timer animation
+        Promise.resolve().then(() => {
+            this.timer.reset();
+        });
     }
 
     pauseTimer() {
